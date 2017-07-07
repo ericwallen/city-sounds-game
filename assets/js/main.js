@@ -12,27 +12,24 @@ var GameState ={
     this.load.spritesheet('airplaneImageKey', 'assets/images/airplane-spritesheet.png', 400, 400, 3);
     this.load.spritesheet('fireTruckKey', 'assets/images/fire-truck-spritesheet.png', 400, 400, 3);
 
-    this.load.audio('dogSoundKey', 'assets/sounds/dog.mp3');
-    this.load.audio('iceSkatingSoundKey', 'assets/sounds/ice-skating.mp3')
-    this.load.audio('airplaneSoundKey', 'assets/sounds/airplane.mp3')
-    this.load.audio('fireTruckSoundKey', 'assets/sounds/fire-truck.mp3')
+    this.load.audio('dogSoundKey', 'assets/sounds/dog.m4a');
+    this.load.audio('iceSkatingSoundKey', 'assets/sounds/ice-skating.m4a');
+    this.load.audio('airplaneSoundKey', 'assets/sounds/airplane.m4a');
+    this.load.audio('fireTruckSoundKey', 'assets/sounds/fire-truck.m4a');
   },
 
   create: function(){
-
-    //scaling optioins
+    //scales game responsively to screen size
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-    //have page align horizantally and vertically
+    //have game align horizantally and vertically
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
-
 
     // create a sprite for the background
     this.backgroundSprite = this.game.add.sprite(0, 0, 'backgroundImageKey');
 
-    //Group Items
-
+    //Group Items & Switch Between Them
    var cityItemData = [
      {key: 'dogImageKey', text: 'Doggy', audio: 'dogSoundKey'},
      {key: 'iceSkatingImageKey', text: 'Ice Skating', audio: 'iceSkatingSoundKey'},
@@ -44,7 +41,6 @@ var GameState ={
 
    var self = this;
    var cityItem;
-
 
    cityItemData.forEach(function(element){
      cityItem = self.cityItems.create(-1200, self.game.world.centerY, element.key, 0);
@@ -59,6 +55,7 @@ var GameState ={
      cityItem.input.pixelPerfectClick = true;
      cityItem.events.onInputDown.add(self.itemAnimate, self);
    });
+
     this.currentItem = this.cityItems.next();
     this.currentItem.position.set(self.game.world.centerX, self.game.world.centerY);
 
@@ -78,6 +75,7 @@ var GameState ={
     this.rightArrowSprite.input.pixelPerfectClick = true;
     this.rightArrowSprite.events.onInputDown.add(this.switchItem, this);
   },
+
   update: function(){
 
   },
@@ -99,33 +97,11 @@ var GameState ={
       endX = -500;
     }
 
-
-    // var newItemMovement = this.game.add.tween(newItem);
-    // newItemMovement.to({x: -500}, 1000 );
-    // newItemMovement.start();
-    //
-    // var currentItemMovement = this.game.add.tween(this.currentItem);
-    // curentItemMovement.to({x: 2480}, 1000);
-    // curentItemMovement.start();
-    //
-    // this.currentItem = newItem;
-
-
-
     this.currentItem.x = endX;
     newItem.x = this.game.world.centerX;
     this.currentItem = newItem;
+    },
 
-    //1. get the direction of the arrow
-
-    //2. get the next item
-
-    //3. get final destination of current item
-
-    //4. move current item to final destination
-
-    //5. set the next anmimal as the new current animal
-  },
 
   itemAnimate: function(sprite, event){
     console.log('I am anmimated')
@@ -138,3 +114,17 @@ var GameState ={
 
 game.state.add('GameState', GameState);
 game.state.start('GameState');
+
+
+
+
+
+// var newItemMovement = this.game.add.tween(newItem);
+// newItemMovement.to({x: -500}, 1000 );
+// newItemMovement.start();
+//
+// var currentItemMovement = this.game.add.tween(this.currentItem);
+// curentItemMovement.to({x: 2480}, 1000);
+// curentItemMovement.start();
+//
+// this.currentItem = newItem;
